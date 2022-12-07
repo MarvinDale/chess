@@ -1,0 +1,39 @@
+#board {
+  background-color: #312e2b;
+  width: 50vw;
+  height: 50vw;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.tile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 12.5vw;
+  height: 12.5vw;
+}
+
+.black {
+  background-color: #769656;
+}
+
+.white {
+  background-color: #eeeed2;
+}
+
+#piece {
+  background-color: #f9f9f9;
+  width: 5vw;
+  height: 5vw;
+  outline-style: solid;
+  outline-width: 2px;
+  border-radius: 20px;
+  position: absolute;
+  cursor: grab;
+}
