@@ -20,23 +20,15 @@ body {
   align-items: center;
   width: 12.5%;
   height: 12.5%;
-}
-
-.black {
-  background-color: #8877b7;
-}
-
-.white {
-  background-color: #efefef;
+  outline-style: solid;
+  outline-width: 1px;
 }
 
 #piece {
-  background-color: #f9f9f9;
-  width: 5vw;
-  height: 5vw;
-  outline-style: solid;
-  outline-width: 2px;
-  border-radius: 20px;
+  width: 9vw;
+  height: 9vw;
   position: absolute;
   cursor: grab;
+  background-image: url("../resources/black-pawn.png");
+  background-size: 100%;
 }
