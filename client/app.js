@@ -1,3 +1,13 @@
+let originalXPos = 0;
+let originalYPos = 0;
+
+window.addEventListener("load", (e) => {
+  let piece = document.getElementById("piece");
+  originalXPos = piece.style.left;
+  originalYPos = piece.style.top;
+  console.log("x" + originalXPos);
+});
+
 // Make the DIV element draggable:
 dragElement(document.getElementById("piece"));
 
@@ -37,5 +47,7 @@ function dragElement(piece) {
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
+    piece.style.top = originalYPos;
+    piece.style.left = originalXPos;
   }
 }
