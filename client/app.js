@@ -1,3 +1,5 @@
+const board = [];
+
 let originalXPos = 0;
 let originalYPos = 0;
 
