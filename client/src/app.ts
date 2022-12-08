@@ -1,18 +1,20 @@
 const board = [];
 
-let originalXPos = 0;
-let originalYPos = 0;
+let originalXPos: string = "0";
+let originalYPos: string = "0";
 
 window.addEventListener("load", (e) => {
-  let pieces = document.getElementsByClassName("piece");
-  originalXPos = pieces.item(0).style.left;
-  originalYPos = pieces.item(0).style.top;
+  let pieces = document.getElementsByClassName(
+    "piece"
+  ) as HTMLCollectionOf<HTMLElement>;
+  originalXPos = pieces.item(0)!.style.left;
+  originalYPos = pieces.item(0)!.style.top;
 });
 
 // Make the DIV element draggable:
-dragElement(document.getElementsByClassName("piece").item(0));
+dragElement(document.getElementsByClassName("piece").item(0) as HTMLElement);
 
-function dragElement(piece) {
+function dragElement(piece: HTMLElement) {
   var newXPos = 0,
     newYPos = 0,
     currentXPos = 0,
@@ -20,7 +22,7 @@ function dragElement(piece) {
 
   piece.onmousedown = dragMouseDown;
 
-  function dragMouseDown(e) {
+  function dragMouseDown(e: MouseEvent) {
     e = e || window.event;
     e.preventDefault();
     // get the mouse cursor position at startup:
@@ -31,7 +33,7 @@ function dragElement(piece) {
     document.onmousemove = elementDrag;
   }
 
-  function elementDrag(e) {
+  function elementDrag(e: MouseEvent) {
     e = e || window.event;
     e.preventDefault();
     // calculate the new cursor position:

@@ -10,7 +10,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
-  background-image: url("../resources/board.png");
+  background-image: url("./resources/board.png");
   background-size: 100%;
 }
 
@@ -29,6 +29,6 @@ body {
   height: 9vw;
   position: absolute;
   cursor: grab;
-  background-image: url("../resources/black-pawn.png");
+  background-image: url("./resources/black-pawn.png");
   background-size: 100%;
 }
