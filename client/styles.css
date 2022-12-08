@@ -24,7 +24,7 @@ body {
   outline-width: 1px;
 }
 
-#piece {
+.piece {
   width: 9vw;
   height: 9vw;
   position: absolute;

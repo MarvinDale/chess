@@ -4,13 +4,13 @@ let originalXPos = 0;
 let originalYPos = 0;
 
 window.addEventListener("load", (e) => {
-  let piece = document.getElementById("piece");
-  originalXPos = piece.style.left;
-  originalYPos = piece.style.top;
+  let pieces = document.getElementsByClassName("piece");
+  originalXPos = pieces.item(0).style.left;
+  originalYPos = pieces.item(0).style.top;
 });
 
 // Make the DIV element draggable:
-dragElement(document.getElementById("piece"));
+dragElement(document.getElementsByClassName("piece").item(0));
 
 function dragElement(piece) {
   var newXPos = 0,
