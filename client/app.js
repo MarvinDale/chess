@@ -5,7 +5,6 @@ window.addEventListener("load", (e) => {
   let piece = document.getElementById("piece");
   originalXPos = piece.style.left;
   originalYPos = piece.style.top;
-  console.log("x" + originalXPos);
 });
 
 // Make the DIV element draggable:
