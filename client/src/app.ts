@@ -1,9 +1,9 @@
-const board = [];
+const board: string[] = [];
 
 let originalXPos: string = "0";
 let originalYPos: string = "0";
 
-window.addEventListener("load", (e) => {
+window.addEventListener("load", () => {
   let pieces = document.getElementsByClassName(
     "piece"
   ) as HTMLCollectionOf<HTMLElement>;
@@ -22,25 +22,25 @@ function dragElement(piece: HTMLElement) {
 
   piece.onmousedown = dragMouseDown;
 
-  function dragMouseDown(e: MouseEvent) {
-    e = e || window.event;
-    e.preventDefault();
+  function dragMouseDown(mouseEvent: MouseEvent) {
+    mouseEvent = mouseEvent || window.event;
+    mouseEvent.preventDefault();
     // get the mouse cursor position at startup:
-    currentXPos = e.clientX;
-    currentYPos = e.clientY;
+    currentXPos = mouseEvent.clientX;
+    currentYPos = mouseEvent.clientY;
     document.onmouseup = closeDragElement;
     // call a function whenever the cursor moves:
     document.onmousemove = elementDrag;
   }
 
-  function elementDrag(e: MouseEvent) {
-    e = e || window.event;
-    e.preventDefault();
+  function elementDrag(mouseEvent: MouseEvent) {
+    mouseEvent = mouseEvent || window.event;
+    mouseEvent.preventDefault();
     // calculate the new cursor position:
-    newXPos = currentXPos - e.clientX;
-    newYPos = currentYPos - e.clientY;
-    currentXPos = e.clientX;
-    currentYPos = e.clientY;
+    newXPos = currentXPos - mouseEvent.clientX;
+    newYPos = currentYPos - mouseEvent.clientY;
+    currentXPos = mouseEvent.clientX;
+    currentYPos = mouseEvent.clientY;
     // set the element's new position:
     piece.style.top = piece.offsetTop - newYPos + "px";
     piece.style.left = piece.offsetLeft - newXPos + "px";
