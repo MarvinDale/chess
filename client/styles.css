@@ -10,6 +10,7 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
+  flex-wrap: wrap;
   background-image: url("./resources/board.png");
   background-size: 100%;
 }
@@ -20,8 +21,6 @@ body {
   align-items: center;
   width: 12.5%;
   height: 12.5%;
-  outline-style: solid;
-  outline-width: 1px;
 }
 
 .piece {
@@ -31,4 +30,12 @@ body {
   cursor: grab;
   background-image: url("./resources/black-pawn.png");
   background-size: 100%;
+}
+
+.white-pawn {
+  background-image: url("./resources/white-pawn.png");
+}
+
+.black-pawn {
+  background-image: url("./resources/black-pawn.png");
 }
