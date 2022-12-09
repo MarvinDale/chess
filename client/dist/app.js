@@ -11,21 +11,20 @@ board.addEventListener("mousedown", (event) => {
     let target = event === null || event === void 0 ? void 0 : event.target;
     console.log(target.id);
     if (target.id != "board") {
-        dragElement(document.getElementById(target.id));
+        dragPiece(document.getElementById(target.id));
     }
 });
-function dragElement(piece) {
-    var newXPos = 0, newYPos = 0, currentXPos = 0, currentYPos = 0;
-    piece.onmousedown = dragMouseDown;
-    function dragMouseDown(mouseEvent) {
-        mouseEvent = mouseEvent || window.event;
-        mouseEvent.preventDefault();
-        currentXPos = mouseEvent.clientX;
-        currentYPos = mouseEvent.clientY;
-        document.onmouseup = closeDragElement;
-        document.onmousemove = elementDrag;
-    }
-    function elementDrag(mouseEvent) {
+function dragPiece(piece) {
+    let newXPos = 0;
+    let newYPos = 0;
+    let currentXPos = 0;
+    let currentYPos = 0;
+    let pieceBoundingRect = piece.getBoundingClientRect();
+    currentXPos = (pieceBoundingRect.left + pieceBoundingRect.right) / 2;
+    currentYPos = (pieceBoundingRect.top + pieceBoundingRect.bottom) / 2;
+    document.onmouseup = dropPiece;
+    document.onmousemove = movePiece;
+    function movePiece(mouseEvent) {
         mouseEvent = mouseEvent || window.event;
         mouseEvent.preventDefault();
         newXPos = currentXPos - mouseEvent.clientX;
@@ -35,7 +34,7 @@ function dragElement(piece) {
         piece.style.top = piece.offsetTop - newYPos + "px";
         piece.style.left = piece.offsetLeft - newXPos + "px";
     }
-    function closeDragElement() {
+    function dropPiece() {
         document.onmouseup = null;
         document.onmousemove = null;
         piece.style.top = originalYPos;

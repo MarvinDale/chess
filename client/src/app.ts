@@ -15,33 +15,27 @@ board.addEventListener("mousedown", (event: MouseEvent) => {
   let target = event?.target as HTMLElement;
   console.log(target.id);
   if (target.id != "board") {
-    dragElement(document.getElementById(target.id)!);
+    dragPiece(document.getElementById(target.id)!);
   }
 });
 
 // Make the DIV element draggable:
 //dragElement(document.getElementsByClassName("piece").item(0) as HTMLElement);
 
-function dragElement(piece: HTMLElement) {
-  var newXPos = 0,
-    newYPos = 0,
-    currentXPos = 0,
-    currentYPos = 0;
+function dragPiece(piece: HTMLElement) {
+  let newXPos = 0;
+  let newYPos = 0;
+  let currentXPos = 0;
+  let currentYPos = 0;
+  let pieceBoundingRect = piece.getBoundingClientRect();
 
-  piece.onmousedown = dragMouseDown;
+  currentXPos = (pieceBoundingRect.left + pieceBoundingRect.right) / 2;
+  currentYPos = (pieceBoundingRect.top + pieceBoundingRect.bottom) / 2;
 
-  function dragMouseDown(mouseEvent: MouseEvent) {
-    mouseEvent = mouseEvent || window.event;
-    mouseEvent.preventDefault();
-    // get the mouse cursor position at startup:
-    currentXPos = mouseEvent.clientX;
-    currentYPos = mouseEvent.clientY;
-    document.onmouseup = closeDragElement;
-    // call a function whenever the cursor moves:
-    document.onmousemove = elementDrag;
-  }
+  document.onmouseup = dropPiece;
+  document.onmousemove = movePiece;
 
-  function elementDrag(mouseEvent: MouseEvent) {
+  function movePiece(mouseEvent: MouseEvent) {
     mouseEvent = mouseEvent || window.event;
     mouseEvent.preventDefault();
     // calculate the new cursor position:
@@ -54,7 +48,7 @@ function dragElement(piece: HTMLElement) {
     piece.style.left = piece.offsetLeft - newXPos + "px";
   }
 
-  function closeDragElement() {
+  function dropPiece() {
     // stop moving when mouse button is released:
     document.onmouseup = null;
     document.onmousemove = null;
