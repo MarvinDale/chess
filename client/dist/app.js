@@ -1,5 +1,5 @@
 "use strict";
-const board = [];
+const board = document.getElementById("board");
 let originalXPos = "0";
 let originalYPos = "0";
 window.addEventListener("load", () => {
@@ -7,7 +7,13 @@ window.addEventListener("load", () => {
     originalXPos = pieces.item(0).style.left;
     originalYPos = pieces.item(0).style.top;
 });
-dragElement(document.getElementsByClassName("piece").item(0));
+board.addEventListener("mousedown", (event) => {
+    let target = event === null || event === void 0 ? void 0 : event.target;
+    console.log(target.id);
+    if (target.id != "board") {
+        dragElement(document.getElementById(target.id));
+    }
+});
 function dragElement(piece) {
     var newXPos = 0, newYPos = 0, currentXPos = 0, currentYPos = 0;
     piece.onmousedown = dragMouseDown;
@@ -36,3 +42,4 @@ function dragElement(piece) {
         piece.style.left = originalXPos;
     }
 }
+//# sourceMappingURL=app.js.map

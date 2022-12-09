@@ -1,4 +1,4 @@
-const board: string[] = [];
+const board: HTMLElement = document.getElementById("board")!;
 
 let originalXPos: string = "0";
 let originalYPos: string = "0";
@@ -11,8 +11,16 @@ window.addEventListener("load", () => {
   originalYPos = pieces.item(0)!.style.top;
 });
 
+board.addEventListener("mousedown", (event: MouseEvent) => {
+  let target = event?.target as HTMLElement;
+  console.log(target.id);
+  if (target.id != "board") {
+    dragElement(document.getElementById(target.id)!);
+  }
+});
+
 // Make the DIV element draggable:
-dragElement(document.getElementsByClassName("piece").item(0) as HTMLElement);
+//dragElement(document.getElementsByClassName("piece").item(0) as HTMLElement);
 
 function dragElement(piece: HTMLElement) {
   var newXPos = 0,
