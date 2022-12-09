@@ -18,8 +18,10 @@ let originalYPos: string = "0";
 window.onload = () => {
   for (let i = 0; i < boardCoordinates.length; i++) {
     let square = document.createElement("div");
-    square.className = "tile";
-    square.innerHTML = `<div id="${boardCoordinates[i]}" class="piece white-pawn"></div>`;
+    //square.className = "tile";
+    square.className = `piece white-pawn ${boardCoordinates[i]}`;
+    square.id = boardCoordinates[i];
+    //square.innerHTML = `<div id="${boardCoordinates[i]}" class="piece white-pawn b8"></div>`;
     boardElement.appendChild(square);
   }
 };
