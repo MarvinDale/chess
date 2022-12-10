@@ -9,6 +9,27 @@ body {
   transform: translate(-50%, -50%);
 }
 
+#chess-board {
+  width: 75vw;
+  height: 75vw;
+  background-color: #101010;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.square {
+  width: 12.5%;
+  height: 12.5%px;
+  background-color: #f8ebc7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.square[data-color="black"] {
+  background-color: #016829;
+}
+
 #board {
   width: 75vw;
   height: 75vw;
@@ -29,16 +50,14 @@ body {
 }
 
 .piece {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 12.5%;
   height: 12.5%;
-  /* width: 9vw;
-  height: 9vw; */
+  width: 9vw;
+  height: 9vw;
   position: absolute;
   cursor: grab;
   background-size: 100%;
+  background-image: url("./resources/white-pawn.png");
 }
 
 .white-pawn {
