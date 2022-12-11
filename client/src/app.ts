@@ -84,9 +84,8 @@ function pieceClickHandler(event: Event) {
   event.stopPropagation(); // when you click a piece this stops the square being clicked too
   let clickedPiece = event.target as HTMLDivElement;
 
-  if (selectedPiece?.getAttribute("selected") === "true") {
-    handleClick(clickedPiece);
-  } else if (
+  if (
+    selectedPiece?.getAttribute("selected") === "true" ||
     (isWhitePiece(clickedPiece) && colorsTurn === "white") ||
     (!isWhitePiece(clickedPiece) && colorsTurn === "black")
   ) {
