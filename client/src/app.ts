@@ -1,8 +1,8 @@
-const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-let FENStringPosition = 0;
-const boardElement: HTMLElement = document.getElementById("board")!;
-
 const chessBoard = document.getElementById("chess-board")!;
+const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+const testFEN = "8/8/8/4p1K1/2k1P3/8/8/8";
+
+let FENStringPosition = 0;
 let selectedPiece: HTMLElement | null;
 
 createBoard();
@@ -13,7 +13,7 @@ function createBoard() {
     for (var j = 0; j < 8; j++) {
       let square = document.createElement("div");
       square.classList.add("square");
-      square.setAttribute("data-color", (i + j) % 2 === 0 ? "black" : "white");
+      square.setAttribute("data-color", (i + j) % 2 === 0 ? "white" : "black");
       square.addEventListener("click", () => {
         // Check if there is already a piece on this square
         if (selectedPiece == null || square.children.length > 0) {
@@ -33,21 +33,27 @@ function addPiecesToBoard() {
   const squares = document.querySelectorAll(".square");
   for (var i = 0; i < squares.length; i++) {
     let square = squares[i] as HTMLDivElement;
-    i = parseFEN(i, square);
+    i = parseFEN(startingPositionFEN, i, square);
   }
 }
 
-function parseFEN(i: number, square: HTMLDivElement) {
-  let FEN = startingPositionFEN.replace(/\//g, "");
+function parseFEN(
+  FENString: string,
+  squareIndex: number,
+  square: HTMLDivElement
+) {
+  let FEN = FENString.replace(/\//g, "");
 
+  // FEN chars that are numbers are empty squares
   if (!isNaN(+FEN.charAt(FENStringPosition))) {
-    i = i + +FEN.charAt(FENStringPosition) - 1;
+    // update squre index to skip empty squares
+    squareIndex = squareIndex + +FEN.charAt(FENStringPosition) - 1;
   } else {
     placePiece(square, FEN.charAt(FENStringPosition));
   }
 
   FENStringPosition++;
-  return i;
+  return squareIndex;
 }
 
 function placePiece(square: HTMLDivElement, FENChar: string) {

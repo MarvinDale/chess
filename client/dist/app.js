@@ -1,7 +1,7 @@
 "use strict";
 const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+const testFEN = "8/8/8/4p1K1/2k1P3/8/8/8";
 let FENStringPosition = 0;
-const boardElement = document.getElementById("board");
 const chessBoard = document.getElementById("chess-board");
 let selectedPiece;
 createBoard();
@@ -11,7 +11,7 @@ function createBoard() {
         for (var j = 0; j < 8; j++) {
             let square = document.createElement("div");
             square.classList.add("square");
-            square.setAttribute("data-color", (i + j) % 2 === 0 ? "black" : "white");
+            square.setAttribute("data-color", (i + j) % 2 === 0 ? "white" : "black");
             square.addEventListener("click", () => {
                 if (selectedPiece == null || square.children.length > 0) {
                     return;
@@ -27,19 +27,19 @@ function addPiecesToBoard() {
     const squares = document.querySelectorAll(".square");
     for (var i = 0; i < squares.length; i++) {
         let square = squares[i];
-        i = parseFEN(i, square);
+        i = parseFEN(startingPositionFEN, i, square);
     }
 }
-function parseFEN(i, square) {
-    let FEN = startingPositionFEN.replace(/\//g, "");
+function parseFEN(FENString, squareIndex, square) {
+    let FEN = FENString.replace(/\//g, "");
     if (!isNaN(+FEN.charAt(FENStringPosition))) {
-        i = i + +FEN.charAt(FENStringPosition) - 1;
+        squareIndex = squareIndex + +FEN.charAt(FENStringPosition) - 1;
     }
     else {
         placePiece(square, FEN.charAt(FENStringPosition));
     }
     FENStringPosition++;
-    return i;
+    return squareIndex;
 }
 function placePiece(square, FENChar) {
     var piece = document.createElement("div");
