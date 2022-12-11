@@ -12,6 +12,8 @@ body {
 #chess-board {
   width: 75vw;
   height: 75vw;
+  max-height: 75vh;
+  max-width: 75vh;
   background-color: #101010;
   display: flex;
   flex-wrap: wrap;
@@ -19,7 +21,7 @@ body {
 
 .square {
   width: 12.5%;
-  height: 12.5%px;
+  height: 12.5%;
   background-color: #eeeed2;
   display: flex;
   justify-content: center;
@@ -31,10 +33,10 @@ body {
 }
 
 .piece {
-  width: 12.5%;
-  height: 12.5%;
   width: 9vw;
   height: 9vw;
+  max-height: 9vh;
+  max-width: 9vh;
   position: absolute;
   cursor: grab;
   background-size: 100%;
