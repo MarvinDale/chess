@@ -141,25 +141,26 @@ function selectPiece(piece) {
     piece.setAttribute("selected", "true");
 }
 function isSameColor(piece1, piece2) {
-    let isPiece1UpperCase;
-    let isPiece2UpperCase;
-    piece1.getAttribute("piece-type");
-    piece2.getAttribute("piece-type");
-    if (piece1.getAttribute("piece-type").toUpperCase() === piece1.getAttribute("piece-type")) {
-        isPiece1UpperCase = true;
+    let isPiece1White;
+    let isPiece2White;
+    if (isWhite(piece1)) {
+        isPiece1White = true;
     }
     else {
-        isPiece1UpperCase = false;
+        isPiece1White = false;
     }
-    if (piece2.getAttribute("piece-type").toUpperCase() === piece2.getAttribute("piece-type")) {
-        isPiece2UpperCase = true;
+    if (isWhite(piece2)) {
+        isPiece2White = true;
     }
     else {
-        isPiece2UpperCase = false;
+        isPiece2White = false;
     }
-    if (isPiece1UpperCase === isPiece2UpperCase) {
+    if (isPiece1White === isPiece2White) {
         return true;
     }
     return false;
+}
+function isWhite(piece) {
+    return piece.getAttribute("piece-type").toUpperCase() === piece.getAttribute("piece-type");
 }
 //# sourceMappingURL=app.js.map
