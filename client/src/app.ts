@@ -2,6 +2,18 @@ const chessBoard = document.getElementById("chess-board")!;
 const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 const testFEN = "8/8/8/4p1K1/2k1P3/8/8/8";
 
+// prettier-ignore
+const boardCoordinates: string[][] = [
+  ["a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8"],
+  ["a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7"],
+  ["a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"],
+  ["a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5"],
+  ["a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4"],
+  ["a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3"],
+  ["a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2"],
+  ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"]
+]
+
 let FENStringPosition = 0;
 let selectedPiece: HTMLElement | null;
 
@@ -13,6 +25,7 @@ function createBoard() {
     for (let rank = 0; rank < 8; rank++) {
       let square = document.createElement("div");
       square.classList.add("square");
+      square.id = boardCoordinates[file][rank];
       square.setAttribute("data-color", (file + rank) % 2 === 0 ? "white" : "black");
       square.addEventListener("click", () => {
         squareClickHandler(square);
