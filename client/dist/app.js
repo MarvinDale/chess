@@ -74,10 +74,8 @@ function pieceClickHandler(event) {
         handleClick(clickedPiece);
     }
     else {
-        if (isWhitePiece(clickedPiece) && colorsTurn === "white") {
-            handleClick(clickedPiece);
-        }
-        else if (!isWhitePiece(clickedPiece) && colorsTurn == "black") {
+        if ((isWhitePiece(clickedPiece) && colorsTurn === "white") ||
+            (!isWhitePiece(clickedPiece) && colorsTurn == "black")) {
             handleClick(clickedPiece);
         }
     }
