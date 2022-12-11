@@ -76,12 +76,10 @@ function pieceClickHandler(event) {
         handleClick(clickedPiece);
     }
     else {
-        if (clickedPiece.getAttribute("piece-type").toUpperCase() === clickedPiece.getAttribute("piece-type") &&
-            colorsTurn === "white") {
+        if (isWhite(clickedPiece) && colorsTurn === "white") {
             handleClick(clickedPiece);
         }
-        else if (clickedPiece.getAttribute("piece-type").toUpperCase() !== clickedPiece.getAttribute("piece-type") &&
-            colorsTurn == "black") {
+        else if (!isWhite(clickedPiece) && colorsTurn == "black") {
             handleClick(clickedPiece);
         }
     }
