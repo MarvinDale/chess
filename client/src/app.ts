@@ -9,11 +9,11 @@ createBoard();
 addPiecesToBoard();
 
 function createBoard() {
-  for (var i = 0; i < 8; i++) {
-    for (var j = 0; j < 8; j++) {
+  for (let file = 0; file < 8; file++) {
+    for (let rank = 0; rank < 8; rank++) {
       let square = document.createElement("div");
       square.classList.add("square");
-      square.setAttribute("data-color", (i + j) % 2 === 0 ? "white" : "black");
+      square.setAttribute("data-color", (file + rank) % 2 === 0 ? "white" : "black");
       square.addEventListener("click", () => {
         squareClickHandler(square);
       });
@@ -36,7 +36,7 @@ function squareClickHandler(square: HTMLDivElement) {
 
 function addPiecesToBoard() {
   const squares = document.querySelectorAll(".square");
-  for (var i = 0; i < squares.length; i++) {
+  for (let i = 0; i < squares.length; i++) {
     let square = squares[i] as HTMLDivElement;
     i = parseFEN(startingPositionFEN, i, square);
   }
@@ -58,7 +58,7 @@ function parseFEN(FENString: string, squareIndex: number, square: HTMLDivElement
 }
 
 function placePiece(square: HTMLDivElement, FENChar: string) {
-  var piece = document.createElement("div");
+  let piece = document.createElement("div");
   piece.classList.add("piece");
   piece.setAttribute("piece-type", FENChar);
 

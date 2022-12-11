@@ -1,5 +1,6 @@
 body {
   background-color: #312e2b;
+  display: flex;
 }
 
 #board-container {
@@ -7,6 +8,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  display: flex;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 
 #chess-board {
@@ -17,6 +21,14 @@ body {
   background-color: #101010;
   display: flex;
   flex-wrap: wrap;
+}
+
+#sidebar-container {
+  background-color: #272522;
+  width: 25vw;
+  height: 75vw;
+  max-height: 75vh;
+  margin-left: 1em;
 }
 
 .square {
