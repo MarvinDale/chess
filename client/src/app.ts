@@ -26,11 +26,7 @@ function squareClickHandler(square: HTMLDivElement) {
   // Check if there's a piece selected
   // Check if there is already a piece on this square
   console.log("square clicked");
-  if (
-    selectedPiece === null ||
-    selectedPiece === undefined ||
-    selectedPiece.getAttribute("selected") === "false"
-  ) {
+  if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
     return;
   }
   //the selected piece to this square
@@ -46,11 +42,7 @@ function addPiecesToBoard() {
   }
 }
 
-function parseFEN(
-  FENString: string,
-  squareIndex: number,
-  square: HTMLDivElement
-) {
+function parseFEN(FENString: string, squareIndex: number, square: HTMLDivElement) {
   let FEN = FENString.replace(/\//g, "");
 
   // FEN chars that are numbers are empty squares
@@ -77,19 +69,12 @@ function placePiece(square: HTMLDivElement, FENChar: string) {
 }
 
 function pieceClickHandler(event: Event) {
-  // click on piece
-
-  // when you click a piece this stops
-  // the square being clicked too
+  // when you click a piece this stops the square being clicked too
   event.stopPropagation();
   let clickedPiece = event.target as HTMLDivElement;
   console.log("piece clicked: " + clickedPiece);
   // if there are no pieces selected, select the clicked piece
-  if (
-    selectedPiece === null ||
-    selectedPiece === undefined ||
-    selectedPiece.getAttribute("selected") === "false"
-  ) {
+  if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
     selectedPiece = clickedPiece;
     selectPiece(selectedPiece);
   }
@@ -99,6 +84,12 @@ function pieceClickHandler(event: Event) {
     if (selectedPiece === clickedPiece) {
       deselectPiece(selectedPiece);
       // otherwise replace the clicked piece with the selected piece and deselect
+    } else if (
+      isSameColor(selectedPiece.getAttribute("piece-type")!) === isSameColor(clickedPiece.getAttribute("piece-type")!)
+    ) {
+      deselectPiece(selectedPiece);
+      selectedPiece = clickedPiece;
+      selectPiece(selectedPiece);
     } else {
       let clickedPieceSquare = clickedPiece.parentElement;
       clickedPiece.remove();
@@ -114,4 +105,14 @@ function deselectPiece(piece: HTMLElement) {
 
 function selectPiece(piece: HTMLElement) {
   piece.setAttribute("selected", "true");
+}
+
+// used to check if FEN chars are the same case
+// same case means the pieces are the same color
+function isSameColor(str: string): boolean {
+  if (str.toUpperCase() === str) {
+    return true;
+  } else {
+    return false;
+  }
 }

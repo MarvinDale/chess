@@ -21,9 +21,7 @@ function createBoard() {
 }
 function squareClickHandler(square) {
     console.log("square clicked");
-    if (selectedPiece === null ||
-        selectedPiece === undefined ||
-        selectedPiece.getAttribute("selected") === "false") {
+    if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
         return;
     }
     deselectPiece(selectedPiece);
@@ -60,15 +58,18 @@ function pieceClickHandler(event) {
     event.stopPropagation();
     let clickedPiece = event.target;
     console.log("piece clicked: " + clickedPiece);
-    if (selectedPiece === null ||
-        selectedPiece === undefined ||
-        selectedPiece.getAttribute("selected") === "false") {
+    if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
         selectedPiece = clickedPiece;
         selectPiece(selectedPiece);
     }
     else if (selectedPiece.getAttribute("selected") === "true") {
         if (selectedPiece === clickedPiece) {
             deselectPiece(selectedPiece);
+        }
+        else if (isSameColor(selectedPiece.getAttribute("piece-type")) === isSameColor(clickedPiece.getAttribute("piece-type"))) {
+            deselectPiece(selectedPiece);
+            selectedPiece = clickedPiece;
+            selectPiece(selectedPiece);
         }
         else {
             let clickedPieceSquare = clickedPiece.parentElement;
@@ -83,5 +84,13 @@ function deselectPiece(piece) {
 }
 function selectPiece(piece) {
     piece.setAttribute("selected", "true");
+}
+function isSameColor(str) {
+    if (str.toUpperCase() === str) {
+        return true;
+    }
+    else {
+        return false;
+    }
 }
 //# sourceMappingURL=app.js.map
