@@ -1,8 +1,8 @@
 "use strict";
+const chessBoard = document.getElementById("chess-board");
 const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 const testFEN = "8/8/8/4p1K1/2k1P3/8/8/8";
 let FENStringPosition = 0;
-const chessBoard = document.getElementById("chess-board");
 let selectedPiece;
 createBoard();
 addPiecesToBoard();
@@ -16,6 +16,7 @@ function createBoard() {
                 if (selectedPiece == null || square.children.length > 0) {
                     return;
                 }
+                selectedPiece.setAttribute("selected", "false");
                 square.appendChild(selectedPiece);
                 selectedPiece = null;
             });
@@ -46,7 +47,11 @@ function placePiece(square, FENChar) {
     piece.classList.add("piece");
     piece.setAttribute("piece-type", FENChar);
     piece.addEventListener("click", (event) => {
+        if (selectedPiece !== null && selectedPiece !== undefined) {
+            selectedPiece.setAttribute("selected", "false");
+        }
         selectedPiece = event.target;
+        selectedPiece.setAttribute("selected", "true");
     });
     square.appendChild(piece);
 }

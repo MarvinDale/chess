@@ -40,6 +40,10 @@ body {
   background-size: 100%;
 }
 
+.piece[selected="true"] {
+  background-color: rgba(255, 255, 0, 0.2);
+}
+
 .piece[piece-type="p"] {
   background-image: url("./resources/black-pawn.png");
 }

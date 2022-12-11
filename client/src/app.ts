@@ -20,6 +20,7 @@ function createBoard() {
           return;
         }
         // Move the selected piece to this square
+        selectedPiece.setAttribute("selected", "false");
         square.appendChild(selectedPiece);
         selectedPiece = null;
       });
@@ -62,7 +63,12 @@ function placePiece(square: HTMLDivElement, FENChar: string) {
   piece.setAttribute("piece-type", FENChar);
 
   piece.addEventListener("click", (event: Event) => {
+    if (selectedPiece !== null && selectedPiece !== undefined) {
+      selectedPiece.setAttribute("selected", "false");
+    }
+
     selectedPiece = event.target as HTMLDivElement;
+    selectedPiece.setAttribute("selected", "true");
   });
   square.appendChild(piece);
 }
