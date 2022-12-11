@@ -9,298 +9,81 @@ body {
   transform: translate(-50%, -50%);
 }
 
-#board {
+#chess-board {
   width: 75vw;
   height: 75vw;
-  position: relative;
+  background-color: #101010;
   display: flex;
   flex-wrap: wrap;
-  background-image: url("./resources/board.png");
-  background-size: 100%;
 }
 
-.tile {
+.square {
+  width: 12.5%;
+  height: 12.5%px;
+  background-color: #eeeed2;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 12.5%;
-  height: 12.5%;
-  position: absolute;
+}
+
+.square[data-color="black"] {
+  background-color: #769656;
 }
 
 .piece {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 12.5%;
   height: 12.5%;
-  /* width: 9vw;
-  height: 9vw; */
+  width: 9vw;
+  height: 9vw;
   position: absolute;
   cursor: grab;
   background-size: 100%;
 }
 
-.white-pawn {
-  background-image: url("./resources/white-pawn.png");
-}
-
-.black-pawn {
+.piece[piece-type="p"] {
   background-image: url("./resources/black-pawn.png");
 }
 
-.a1 {
-  transform: translate(00%, 700%);
+.piece[piece-type="P"] {
+  background-image: url("./resources/white-pawn.png");
 }
 
-.b1 {
-  transform: translate(100%, 700%);
+.piece[piece-type="n"] {
+  background-image: url("./resources/black-knight.png");
 }
 
-.c1 {
-  transform: translate(200%, 700%);
+.piece[piece-type="N"] {
+  background-image: url("./resources/white-knight.png");
 }
 
-.d1 {
-  transform: translate(300%, 700%);
+.piece[piece-type="b"] {
+  background-image: url("./resources/black-bishop.png");
 }
 
-.e1 {
-  transform: translate(400%, 700%);
+.piece[piece-type="B"] {
+  background-image: url("./resources/white-bishop.png");
 }
 
-.f1 {
-  transform: translate(500%, 700%);
+.piece[piece-type="r"] {
+  background-image: url("./resources/black-rook.png");
 }
 
-.g1 {
-  transform: translate(600%, 700%);
+.piece[piece-type="R"] {
+  background-image: url("./resources/white-rook.png");
 }
 
-.h1 {
-  transform: translate(700%, 700%);
+.piece[piece-type="q"] {
+  background-image: url("./resources/black-queen.png");
 }
 
-.a2 {
-  transform: translate(00%, 600%);
+.piece[piece-type="Q"] {
+  background-image: url("./resources/white-queen.png");
 }
 
-.b2 {
-  transform: translate(100%, 600%);
+.piece[piece-type="k"] {
+  background-image: url("./resources/black-king.png");
 }
 
-.c2 {
-  transform: translate(200%, 600%);
-}
-
-.d2 {
-  transform: translate(300%, 600%);
-}
-
-.e2 {
-  transform: translate(400%, 600%);
-}
-
-.f2 {
-  transform: translate(500%, 600%);
-}
-
-.g2 {
-  transform: translate(600%, 600%);
-}
-
-.h2 {
-  transform: translate(700%, 600%);
-}
-
-.a3 {
-  transform: translate(00%, 500%);
-}
-
-.b3 {
-  transform: translate(100%, 500%);
-}
-
-.c3 {
-  transform: translate(200%, 500%);
-}
-
-.d3 {
-  transform: translate(300%, 500%);
-}
-
-.e3 {
-  transform: translate(400%, 500%);
-}
-
-.f3 {
-  transform: translate(500%, 500%);
-}
-
-.g3 {
-  transform: translate(600%, 500%);
-}
-
-.h3 {
-  transform: translate(700%, 500%);
-}
-
-.a4 {
-  transform: translate(00%, 400%);
-}
-
-.b4 {
-  transform: translate(100%, 400%);
-}
-
-.c4 {
-  transform: translate(200%, 400%);
-}
-
-.d4 {
-  transform: translate(300%, 400%);
-}
-
-.e4 {
-  transform: translate(400%, 400%);
-}
-
-.f4 {
-  transform: translate(500%, 400%);
-}
-
-.g4 {
-  transform: translate(600%, 400%);
-}
-
-.h4 {
-  transform: translate(700%, 400%);
-}
-
-.a5 {
-  transform: translate(00%, 300%);
-}
-
-.b5 {
-  transform: translate(100%, 300%);
-}
-
-.c5 {
-  transform: translate(200%, 300%);
-}
-
-.d5 {
-  transform: translate(300%, 300%);
-}
-
-.e5 {
-  transform: translate(400%, 300%);
-}
-
-.f5 {
-  transform: translate(500%, 300%);
-}
-
-.g5 {
-  transform: translate(600%, 300%);
-}
-
-.h5 {
-  transform: translate(700%, 300%);
-}
-
-.a6 {
-  transform: translate(00%, 200%);
-}
-
-.b6 {
-  transform: translate(100%, 200%);
-}
-
-.c6 {
-  transform: translate(200%, 200%);
-}
-
-.d6 {
-  transform: translate(300%, 200%);
-}
-
-.e6 {
-  transform: translate(400%, 200%);
-}
-
-.f6 {
-  transform: translate(500%, 200%);
-}
-
-.g6 {
-  transform: translate(600%, 200%);
-}
-
-.h6 {
-  transform: translate(700%, 200%);
-}
-
-.a7 {
-  transform: translate(00%, 100%);
-}
-
-.b7 {
-  transform: translate(100%, 100%);
-}
-
-.c7 {
-  transform: translate(200%, 100%);
-}
-
-.d7 {
-  transform: translate(300%, 100%);
-}
-
-.e7 {
-  transform: translate(400%, 100%);
-}
-
-.f7 {
-  transform: translate(500%, 100%);
-}
-
-.g7 {
-  transform: translate(600%, 100%);
-}
-
-.h7 {
-  transform: translate(700%, 100%);
-}
-
-.a8 {
-  transform: translate(00%, 00%);
-}
-
-.b8 {
-  transform: translate(100%, 00%);
-}
-
-.c8 {
-  transform: translate(200%, 00%);
-}
-
-.d8 {
-  transform: translate(300%, 00%);
-}
-
-.e8 {
-  transform: translate(400%, 00%);
-}
-
-.f8 {
-  transform: translate(500%, 00%);
-}
-
-.g8 {
-  transform: translate(600%, 00%);
-}
-
-.h8 {
-  transform: translate(700%, 00%);
+.piece[piece-type="K"] {
+  background-image: url("./resources/white-king.png");
 }

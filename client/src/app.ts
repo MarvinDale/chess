@@ -1,81 +1,62 @@
+const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+let FENStringPosition = 0;
 const boardElement: HTMLElement = document.getElementById("board")!;
 
-// prettier-ignore
-const boardCoordinates: string[] = [
-  "a8", "b8", "c8", "d8", "e8", "f8", "g8", "h8",
-  "a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7",
-  "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6",
-  "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-  "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-  "a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-  "a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2",
-  "a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"
-]
+const chessBoard = document.getElementById("chess-board")!;
+let selectedPiece: HTMLElement | null;
 
-let originalXPos: string = "0";
-let originalYPos: string = "0";
+createBoard();
+addPiecesToBoard();
 
-window.onload = () => {
-  for (let i = 0; i < boardCoordinates.length; i++) {
-    let square = document.createElement("div");
-    //square.className = "tile";
-    square.className = `piece white-pawn ${boardCoordinates[i]}`;
-    square.id = boardCoordinates[i];
-    //square.innerHTML = `<div id="${boardCoordinates[i]}" class="piece white-pawn b8"></div>`;
-    boardElement.appendChild(square);
+function createBoard() {
+  for (var i = 0; i < 8; i++) {
+    for (var j = 0; j < 8; j++) {
+      let square = document.createElement("div");
+      square.classList.add("square");
+      square.setAttribute("data-color", (i + j) % 2 === 0 ? "black" : "white");
+      square.addEventListener("click", () => {
+        // Check if there is already a piece on this square
+        if (selectedPiece == null || square.children.length > 0) {
+          return;
+        }
+        // Move the selected piece to this square
+        square.appendChild(selectedPiece);
+        selectedPiece = null;
+      });
+
+      chessBoard.appendChild(square);
+    }
   }
-};
+}
 
-window.addEventListener("load", () => {
-  let pieces = document.getElementsByClassName(
-    "piece"
-  ) as HTMLCollectionOf<HTMLElement>;
-  originalXPos = pieces.item(0)!.style.left;
-  originalYPos = pieces.item(0)!.style.top;
-});
-
-boardElement.addEventListener("mousedown", (event: MouseEvent) => {
-  let target = event?.target as HTMLElement;
-  console.log(target.id);
-  if (target.id != "board") {
-    dragPiece(document.getElementById(target.id)!);
+function addPiecesToBoard() {
+  const squares = document.querySelectorAll(".square");
+  for (var i = 0; i < squares.length; i++) {
+    let square = squares[i] as HTMLDivElement;
+    i = parseFEN(i, square);
   }
-});
+}
 
-// Make the DIV element draggable:
-//dragElement(document.getElementsByClassName("piece").item(0) as HTMLElement);
+function parseFEN(i: number, square: HTMLDivElement) {
+  let FEN = startingPositionFEN.replace(/\//g, "");
 
-function dragPiece(piece: HTMLElement) {
-  let newXPos = 0;
-  let newYPos = 0;
-  let currentXPos = 0;
-  let currentYPos = 0;
-  let pieceBoundingRect = piece.getBoundingClientRect();
-
-  currentXPos = (pieceBoundingRect.left + pieceBoundingRect.right) / 2;
-  currentYPos = (pieceBoundingRect.top + pieceBoundingRect.bottom) / 2;
-
-  document.onmouseup = dropPiece;
-  document.onmousemove = movePiece;
-
-  function movePiece(mouseEvent: MouseEvent) {
-    mouseEvent = mouseEvent || window.event;
-    mouseEvent.preventDefault();
-    // calculate the new cursor position:
-    newXPos = currentXPos - mouseEvent.clientX;
-    newYPos = currentYPos - mouseEvent.clientY;
-    currentXPos = mouseEvent.clientX;
-    currentYPos = mouseEvent.clientY;
-    // set the element's new position:
-    piece.style.top = piece.offsetTop - newYPos + "px";
-    piece.style.left = piece.offsetLeft - newXPos + "px";
+  if (!isNaN(+FEN.charAt(FENStringPosition))) {
+    i = i + +FEN.charAt(FENStringPosition) - 1;
+  } else {
+    placePiece(square, FEN.charAt(FENStringPosition));
   }
 
-  function dropPiece() {
-    // stop moving when mouse button is released:
-    document.onmouseup = null;
-    document.onmousemove = null;
-    piece.style.top = originalYPos;
-    piece.style.left = originalXPos;
-  }
+  FENStringPosition++;
+  return i;
+}
+
+function placePiece(square: HTMLDivElement, FENChar: string) {
+  var piece = document.createElement("div");
+  piece.classList.add("piece");
+  piece.setAttribute("piece-type", FENChar);
+
+  piece.addEventListener("click", (event: Event) => {
+    selectedPiece = event.target as HTMLDivElement;
+  });
+  square.appendChild(piece);
 }
