@@ -70,32 +70,29 @@ function setupPiecesOnBoard(square, FENChar) {
 function pieceClickHandler(event) {
     event.stopPropagation();
     let clickedPiece = event.target;
-    console.log("piece clicked: " + clickedPiece);
     if ((selectedPiece === null || selectedPiece === void 0 ? void 0 : selectedPiece.getAttribute("selected")) === "true") {
         handleClick(clickedPiece);
     }
     else {
-        if (isWhite(clickedPiece) && colorsTurn === "white") {
+        if (isWhitePiece(clickedPiece) && colorsTurn === "white") {
             handleClick(clickedPiece);
         }
-        else if (!isWhite(clickedPiece) && colorsTurn == "black") {
+        else if (!isWhitePiece(clickedPiece) && colorsTurn == "black") {
             handleClick(clickedPiece);
         }
     }
 }
 function handleClick(clickedPiece) {
     if (isNoPieceSelected()) {
-        selectedPiece = clickedPiece;
-        selectPiece(selectedPiece);
+        selectPiece(clickedPiece);
     }
-    else if (selectedPiece.getAttribute("selected") === "true") {
+    else {
         if (selectedPiece === clickedPiece) {
             deselectPiece(selectedPiece);
         }
         else if (isSameColor(selectedPiece, clickedPiece)) {
             deselectPiece(selectedPiece);
-            selectedPiece = clickedPiece;
-            selectPiece(selectedPiece);
+            selectPiece(clickedPiece);
         }
         else {
             movePiece(selectedPiece, clickedPiece.parentElement, true, clickedPiece);
@@ -134,16 +131,17 @@ function deselectPiece(piece) {
     piece.setAttribute("selected", "false");
 }
 function selectPiece(piece) {
-    piece.setAttribute("selected", "true");
+    selectedPiece = piece;
+    selectedPiece.setAttribute("selected", "true");
 }
 function isSameColor(piece1, piece2) {
     let isPiece1White;
     let isPiece2White;
-    isWhite(piece1) ? (isPiece1White = true) : (isPiece1White = false);
-    isWhite(piece2) ? (isPiece2White = true) : (isPiece2White = false);
+    isWhitePiece(piece1) ? (isPiece1White = true) : (isPiece1White = false);
+    isWhitePiece(piece2) ? (isPiece2White = true) : (isPiece2White = false);
     return isPiece1White === isPiece2White;
 }
-function isWhite(piece) {
+function isWhitePiece(piece) {
     return piece.getAttribute("piece-type").toUpperCase() === piece.getAttribute("piece-type");
 }
 function isNoPieceSelected() {

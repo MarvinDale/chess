@@ -74,7 +74,6 @@ function setupPiecesOnBoard(square: HTMLDivElement, FENChar: string) {
   let piece = document.createElement("div");
   piece.classList.add("piece");
   piece.setAttribute("piece-type", FENChar);
-
   piece.addEventListener("click", (event: Event) => {
     pieceClickHandler(event);
   });
@@ -82,16 +81,15 @@ function setupPiecesOnBoard(square: HTMLDivElement, FENChar: string) {
 }
 
 function pieceClickHandler(event: Event) {
-  // when you click a piece this stops the square being clicked too
-  event.stopPropagation();
+  event.stopPropagation(); // when you click a piece this stops the square being clicked too
   let clickedPiece = event.target as HTMLDivElement;
-  console.log("piece clicked: " + clickedPiece);
+
   if (selectedPiece?.getAttribute("selected") === "true") {
     handleClick(clickedPiece);
   } else {
-    if (isWhite(clickedPiece) && colorsTurn === "white") {
+    if (isWhitePiece(clickedPiece) && colorsTurn === "white") {
       handleClick(clickedPiece);
-    } else if (!isWhite(clickedPiece) && colorsTurn == "black") {
+    } else if (!isWhitePiece(clickedPiece) && colorsTurn == "black") {
       handleClick(clickedPiece);
     }
   }
@@ -100,19 +98,15 @@ function pieceClickHandler(event: Event) {
 function handleClick(clickedPiece: HTMLElement) {
   // if there are no pieces selected, select the clicked piece
   if (isNoPieceSelected()) {
-    selectedPiece = clickedPiece;
-    selectPiece(selectedPiece);
-  }
-  // if there is already a piece selected
-  else if (selectedPiece!.getAttribute("selected") === "true") {
+    selectPiece(clickedPiece);
+  } else {
     // if you clicked the selected piece again, deselect it
     if (selectedPiece === clickedPiece) {
       deselectPiece(selectedPiece);
       // otherwise replace the clicked piece with the selected piece and deselect
     } else if (isSameColor(selectedPiece!, clickedPiece)) {
       deselectPiece(selectedPiece!);
-      selectedPiece = clickedPiece;
-      selectPiece(selectedPiece);
+      selectPiece(clickedPiece);
     } else {
       movePiece(selectedPiece!, clickedPiece.parentElement!, true, clickedPiece);
     }
@@ -156,7 +150,8 @@ function deselectPiece(piece: HTMLElement) {
 }
 
 function selectPiece(piece: HTMLElement) {
-  piece.setAttribute("selected", "true");
+  selectedPiece = piece;
+  selectedPiece.setAttribute("selected", "true");
 }
 
 // used to check if FEN chars are the same case
@@ -165,13 +160,13 @@ function isSameColor(piece1: HTMLElement, piece2: HTMLElement): boolean {
   let isPiece1White;
   let isPiece2White;
 
-  isWhite(piece1) ? (isPiece1White = true) : (isPiece1White = false);
-  isWhite(piece2) ? (isPiece2White = true) : (isPiece2White = false);
+  isWhitePiece(piece1) ? (isPiece1White = true) : (isPiece1White = false);
+  isWhitePiece(piece2) ? (isPiece2White = true) : (isPiece2White = false);
 
   return isPiece1White === isPiece2White;
 }
 
-function isWhite(piece: HTMLElement): boolean {
+function isWhitePiece(piece: HTMLElement): boolean {
   return piece.getAttribute("piece-type")!.toUpperCase() === piece.getAttribute("piece-type");
 }
 
