@@ -112,13 +112,14 @@ function pieceClickHandler(event: Event) {
   }
 }
 
-function movePiece(piece: HTMLElement, square: HTMLElement, isCapture: boolean) {
+function movePiece(piece: HTMLElement, squareToMoveTo: HTMLElement, isCapture: boolean) {
+  let startingSquare = selectedPiece!.parentElement!.id;
   deselectPiece(selectedPiece!);
-  square.appendChild(selectedPiece!);
-  generatePGN(piece.getAttribute("piece-type")!, square.id, isCapture);
+  squareToMoveTo.appendChild(selectedPiece!);
+  generatePGN(piece.getAttribute("piece-type")!, squareToMoveTo.id, startingSquare, isCapture);
 }
 
-function generatePGN(pieceType: string, squareMovedTo: string, isCapture: boolean) {
+function generatePGN(pieceType: string, squareMovedTo: string, squareMovedFrom: string, isCapture: boolean) {
   if (colorsTurn === "white") {
     PGN = PGN + turnNumber + ".";
     colorsTurn = "black";
@@ -129,6 +130,8 @@ function generatePGN(pieceType: string, squareMovedTo: string, isCapture: boolea
 
   if (pieceType !== "p" && pieceType !== "P") {
     PGN = PGN + pieceType;
+  } else if (isCapture) {
+    PGN = PGN + squareMovedFrom.charAt(0);
   }
 
   if (isCapture) {

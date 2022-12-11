@@ -92,12 +92,13 @@ function pieceClickHandler(event) {
         }
     }
 }
-function movePiece(piece, square, isCapture) {
+function movePiece(piece, squareToMoveTo, isCapture) {
+    let startingSquare = selectedPiece.parentElement.id;
     deselectPiece(selectedPiece);
-    square.appendChild(selectedPiece);
-    generatePGN(piece.getAttribute("piece-type"), square.id, isCapture);
+    squareToMoveTo.appendChild(selectedPiece);
+    generatePGN(piece.getAttribute("piece-type"), squareToMoveTo.id, startingSquare, isCapture);
 }
-function generatePGN(pieceType, squareMovedTo, isCapture) {
+function generatePGN(pieceType, squareMovedTo, squareMovedFrom, isCapture) {
     if (colorsTurn === "white") {
         PGN = PGN + turnNumber + ".";
         colorsTurn = "black";
@@ -108,6 +109,9 @@ function generatePGN(pieceType, squareMovedTo, isCapture) {
     }
     if (pieceType !== "p" && pieceType !== "P") {
         PGN = PGN + pieceType;
+    }
+    else if (isCapture) {
+        PGN = PGN + squareMovedFrom.charAt(0);
     }
     if (isCapture) {
         PGN = PGN + "x";
