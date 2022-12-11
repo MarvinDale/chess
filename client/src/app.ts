@@ -41,11 +41,9 @@ function createBoard() {
 
 function squareClickHandler(square: HTMLDivElement) {
   // Check if there's a piece selected
-  console.log("square clicked");
   if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
     return;
   }
-  //the selected piece to this square
   movePiece(selectedPiece, square, false);
 }
 
@@ -65,14 +63,14 @@ function parseFEN(FENString: string, squareIndex: number, square: HTMLDivElement
     // update squre index to skip empty squares
     squareIndex = squareIndex + +FEN.charAt(FENStringPosition) - 1;
   } else {
-    placePiece(square, FEN.charAt(FENStringPosition));
+    setupPiecesOnBoard(square, FEN.charAt(FENStringPosition));
   }
 
   FENStringPosition++;
   return squareIndex;
 }
 
-function placePiece(square: HTMLDivElement, FENChar: string) {
+function setupPiecesOnBoard(square: HTMLDivElement, FENChar: string) {
   let piece = document.createElement("div");
   piece.classList.add("piece");
   piece.setAttribute("piece-type", FENChar);
@@ -116,14 +114,14 @@ function handleClick(clickedPiece: HTMLElement) {
       selectedPiece = clickedPiece;
       selectPiece(selectedPiece);
     } else {
-      let clickedPieceSquare = clickedPiece.parentElement;
-      clickedPiece.remove();
-      movePiece(selectedPiece, clickedPieceSquare!, true);
+      movePiece(selectedPiece, clickedPiece.parentElement!, true, clickedPiece);
     }
   }
 }
 
-function movePiece(piece: HTMLElement, squareToMoveTo: HTMLElement, isCapture: boolean) {
+function movePiece(piece: HTMLElement, squareToMoveTo: HTMLElement, isCapture: boolean, capturedPiece?: HTMLElement) {
+  capturedPiece?.remove();
+
   let startingSquare = selectedPiece!.parentElement!.id;
   deselectPiece(selectedPiece!);
   squareToMoveTo.appendChild(selectedPiece!);

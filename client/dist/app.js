@@ -35,7 +35,6 @@ function createBoard() {
     }
 }
 function squareClickHandler(square) {
-    console.log("square clicked");
     if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
         return;
     }
@@ -54,12 +53,12 @@ function parseFEN(FENString, squareIndex, square) {
         squareIndex = squareIndex + +FEN.charAt(FENStringPosition) - 1;
     }
     else {
-        placePiece(square, FEN.charAt(FENStringPosition));
+        setupPiecesOnBoard(square, FEN.charAt(FENStringPosition));
     }
     FENStringPosition++;
     return squareIndex;
 }
-function placePiece(square, FENChar) {
+function setupPiecesOnBoard(square, FENChar) {
     let piece = document.createElement("div");
     piece.classList.add("piece");
     piece.setAttribute("piece-type", FENChar);
@@ -99,13 +98,12 @@ function handleClick(clickedPiece) {
             selectPiece(selectedPiece);
         }
         else {
-            let clickedPieceSquare = clickedPiece.parentElement;
-            clickedPiece.remove();
-            movePiece(selectedPiece, clickedPieceSquare, true);
+            movePiece(selectedPiece, clickedPiece.parentElement, true, clickedPiece);
         }
     }
 }
-function movePiece(piece, squareToMoveTo, isCapture) {
+function movePiece(piece, squareToMoveTo, isCapture, capturedPiece) {
+    capturedPiece === null || capturedPiece === void 0 ? void 0 : capturedPiece.remove();
     let startingSquare = selectedPiece.parentElement.id;
     deselectPiece(selectedPiece);
     squareToMoveTo.appendChild(selectedPiece);
