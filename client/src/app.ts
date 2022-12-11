@@ -43,8 +43,7 @@ function squareClickHandler(square: HTMLDivElement) {
     return;
   }
   //the selected piece to this square
-  deselectPiece(selectedPiece);
-  square.appendChild(selectedPiece);
+  movePiece(selectedPiece, square);
 }
 
 function addPiecesToBoard() {
@@ -104,10 +103,14 @@ function pieceClickHandler(event: Event) {
     } else {
       let clickedPieceSquare = clickedPiece.parentElement;
       clickedPiece.remove();
-      clickedPieceSquare?.appendChild(selectedPiece);
-      deselectPiece(selectedPiece);
+      movePiece(selectedPiece, clickedPieceSquare!);
     }
   }
+}
+
+function movePiece(piece: HTMLElement, square: HTMLElement) {
+  deselectPiece(selectedPiece!);
+  square.appendChild(selectedPiece!);
 }
 
 function deselectPiece(piece: HTMLElement) {
