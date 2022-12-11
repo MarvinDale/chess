@@ -20,12 +20,13 @@ function createBoard() {
     }
 }
 function squareClickHandler(square) {
-    if (selectedPiece == null ||
-        selectedPiece.getAttribute("selected") === "false" ||
-        square.children.length > 0) {
+    console.log("square clicked");
+    if (selectedPiece === null ||
+        selectedPiece === undefined ||
+        selectedPiece.getAttribute("selected") === "false") {
         return;
     }
-    selectedPiece.setAttribute("selected", "false");
+    deselectPiece(selectedPiece);
     square.appendChild(selectedPiece);
 }
 function addPiecesToBoard() {
@@ -56,10 +57,31 @@ function placePiece(square, FENChar) {
     square.appendChild(piece);
 }
 function pieceClickHandler(event) {
-    if (selectedPiece !== null && selectedPiece !== undefined) {
-        selectedPiece.setAttribute("selected", "false");
+    event.stopPropagation();
+    let clickedPiece = event.target;
+    console.log("piece clicked: " + clickedPiece);
+    if (selectedPiece === null ||
+        selectedPiece === undefined ||
+        selectedPiece.getAttribute("selected") === "false") {
+        selectedPiece = clickedPiece;
+        selectPiece(selectedPiece);
     }
-    selectedPiece = event.target;
-    selectedPiece.setAttribute("selected", "true");
+    else if (selectedPiece.getAttribute("selected") === "true") {
+        if (selectedPiece === clickedPiece) {
+            deselectPiece(selectedPiece);
+        }
+        else {
+            let clickedPieceSquare = clickedPiece.parentElement;
+            clickedPiece.remove();
+            clickedPieceSquare === null || clickedPieceSquare === void 0 ? void 0 : clickedPieceSquare.appendChild(selectedPiece);
+            deselectPiece(selectedPiece);
+        }
+    }
+}
+function deselectPiece(piece) {
+    piece.setAttribute("selected", "false");
+}
+function selectPiece(piece) {
+    piece.setAttribute("selected", "true");
 }
 //# sourceMappingURL=app.js.map

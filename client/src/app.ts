@@ -23,16 +23,18 @@ function createBoard() {
 }
 
 function squareClickHandler(square: HTMLDivElement) {
+  // Check if there's a piece selected
   // Check if there is already a piece on this square
+  console.log("square clicked");
   if (
-    selectedPiece == null ||
-    selectedPiece.getAttribute("selected") === "false" ||
-    square.children.length > 0
+    selectedPiece === null ||
+    selectedPiece === undefined ||
+    selectedPiece.getAttribute("selected") === "false"
   ) {
     return;
   }
-  // Move the selected piece to this square
-  selectedPiece.setAttribute("selected", "false");
+  //the selected piece to this square
+  deselectPiece(selectedPiece);
   square.appendChild(selectedPiece);
 }
 
@@ -75,9 +77,41 @@ function placePiece(square: HTMLDivElement, FENChar: string) {
 }
 
 function pieceClickHandler(event: Event) {
-  if (selectedPiece !== null && selectedPiece !== undefined) {
-    selectedPiece.setAttribute("selected", "false");
+  // click on piece
+
+  // when you click a piece this stops
+  // the square being clicked too
+  event.stopPropagation();
+  let clickedPiece = event.target as HTMLDivElement;
+  console.log("piece clicked: " + clickedPiece);
+  // if there are no pieces selected, select the clicked piece
+  if (
+    selectedPiece === null ||
+    selectedPiece === undefined ||
+    selectedPiece.getAttribute("selected") === "false"
+  ) {
+    selectedPiece = clickedPiece;
+    selectPiece(selectedPiece);
   }
-  selectedPiece = event.target as HTMLDivElement;
-  selectedPiece.setAttribute("selected", "true");
+  // if there is already a piece selected
+  else if (selectedPiece.getAttribute("selected") === "true") {
+    // if you clicked the selected piece again, deselect it
+    if (selectedPiece === clickedPiece) {
+      deselectPiece(selectedPiece);
+      // otherwise replace the clicked piece with the selected piece and deselect
+    } else {
+      let clickedPieceSquare = clickedPiece.parentElement;
+      clickedPiece.remove();
+      clickedPieceSquare?.appendChild(selectedPiece);
+      deselectPiece(selectedPiece);
+    }
+  }
+}
+
+function deselectPiece(piece: HTMLElement) {
+  piece.setAttribute("selected", "false");
+}
+
+function selectPiece(piece: HTMLElement) {
+  piece.setAttribute("selected", "true");
 }
