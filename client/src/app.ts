@@ -1,6 +1,7 @@
-const chessBoard = document.getElementById("chess-board")!;
-const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
-const testFEN = "8/8/8/4p1K1/2k1P3/8/8/8";
+const chessBoard: HTMLElement = document.getElementById("chess-board")!;
+const PGNDisplay: HTMLElement = document.getElementById("PGN")!;
+const startingPositionFEN: string = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+const testFEN: string = "8/8/8/4p1K1/2k1P3/8/8/8";
 
 // prettier-ignore
 const boardCoordinates: string[][] = [
@@ -14,8 +15,11 @@ const boardCoordinates: string[][] = [
   ["a1", "b1", "c1", "d1", "e1", "f1", "g1", "h1"]
 ]
 
-let FENStringPosition = 0;
+let FENStringPosition: number = 0;
 let selectedPiece: HTMLElement | null;
+let PGN: string = "";
+let colorsTurn: string = "white";
+let turnNumber: number = 1;
 
 createBoard();
 addPiecesToBoard();
@@ -43,7 +47,7 @@ function squareClickHandler(square: HTMLDivElement) {
     return;
   }
   //the selected piece to this square
-  movePiece(selectedPiece, square);
+  movePiece(selectedPiece, square, false);
 }
 
 function addPiecesToBoard() {
@@ -103,14 +107,36 @@ function pieceClickHandler(event: Event) {
     } else {
       let clickedPieceSquare = clickedPiece.parentElement;
       clickedPiece.remove();
-      movePiece(selectedPiece, clickedPieceSquare!);
+      movePiece(selectedPiece, clickedPieceSquare!, true);
     }
   }
 }
 
-function movePiece(piece: HTMLElement, square: HTMLElement) {
+function movePiece(piece: HTMLElement, square: HTMLElement, isCapture: boolean) {
   deselectPiece(selectedPiece!);
   square.appendChild(selectedPiece!);
+  generatePGN(piece.getAttribute("piece-type")!, square.id, isCapture);
+}
+
+function generatePGN(pieceType: string, squareMovedTo: string, isCapture: boolean) {
+  if (colorsTurn === "white") {
+    PGN = PGN + turnNumber + ".";
+    colorsTurn = "black";
+  } else {
+    turnNumber++;
+    colorsTurn = "white";
+  }
+
+  if (pieceType !== "p" && pieceType !== "P") {
+    PGN = PGN + pieceType;
+  }
+
+  if (isCapture) {
+    PGN = PGN + "x";
+  }
+
+  PGN = PGN + squareMovedTo + " ";
+  PGNDisplay.textContent = PGN;
 }
 
 function deselectPiece(piece: HTMLElement) {

@@ -1,5 +1,6 @@
 "use strict";
 const chessBoard = document.getElementById("chess-board");
+const PGNDisplay = document.getElementById("PGN");
 const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
 const testFEN = "8/8/8/4p1K1/2k1P3/8/8/8";
 const boardCoordinates = [
@@ -14,6 +15,9 @@ const boardCoordinates = [
 ];
 let FENStringPosition = 0;
 let selectedPiece;
+let PGN = "";
+let colorsTurn = "white";
+let turnNumber = 1;
 createBoard();
 addPiecesToBoard();
 function createBoard() {
@@ -35,8 +39,7 @@ function squareClickHandler(square) {
     if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
         return;
     }
-    deselectPiece(selectedPiece);
-    square.appendChild(selectedPiece);
+    movePiece(selectedPiece, square, false);
 }
 function addPiecesToBoard() {
     const squares = document.querySelectorAll(".square");
@@ -85,10 +88,32 @@ function pieceClickHandler(event) {
         else {
             let clickedPieceSquare = clickedPiece.parentElement;
             clickedPiece.remove();
-            clickedPieceSquare === null || clickedPieceSquare === void 0 ? void 0 : clickedPieceSquare.appendChild(selectedPiece);
-            deselectPiece(selectedPiece);
+            movePiece(selectedPiece, clickedPieceSquare, true);
         }
     }
+}
+function movePiece(piece, square, isCapture) {
+    deselectPiece(selectedPiece);
+    square.appendChild(selectedPiece);
+    generatePGN(piece.getAttribute("piece-type"), square.id, isCapture);
+}
+function generatePGN(pieceType, squareMovedTo, isCapture) {
+    if (colorsTurn === "white") {
+        PGN = PGN + turnNumber + ".";
+        colorsTurn = "black";
+    }
+    else {
+        turnNumber++;
+        colorsTurn = "white";
+    }
+    if (pieceType !== "p" && pieceType !== "P") {
+        PGN = PGN + pieceType;
+    }
+    if (isCapture) {
+        PGN = PGN + "x";
+    }
+    PGN = PGN + squareMovedTo + " ";
+    PGNDisplay.textContent = PGN;
 }
 function deselectPiece(piece) {
     piece.setAttribute("selected", "false");
