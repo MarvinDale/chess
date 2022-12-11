@@ -15,19 +15,25 @@ function createBoard() {
       square.classList.add("square");
       square.setAttribute("data-color", (i + j) % 2 === 0 ? "white" : "black");
       square.addEventListener("click", () => {
-        // Check if there is already a piece on this square
-        if (selectedPiece == null || square.children.length > 0) {
-          return;
-        }
-        // Move the selected piece to this square
-        selectedPiece.setAttribute("selected", "false");
-        square.appendChild(selectedPiece);
-        selectedPiece = null;
+        squareClickHandler(square);
       });
-
       chessBoard.appendChild(square);
     }
   }
+}
+
+function squareClickHandler(square: HTMLDivElement) {
+  // Check if there is already a piece on this square
+  if (
+    selectedPiece == null ||
+    selectedPiece.getAttribute("selected") === "false" ||
+    square.children.length > 0
+  ) {
+    return;
+  }
+  // Move the selected piece to this square
+  selectedPiece.setAttribute("selected", "false");
+  square.appendChild(selectedPiece);
 }
 
 function addPiecesToBoard() {
@@ -63,12 +69,15 @@ function placePiece(square: HTMLDivElement, FENChar: string) {
   piece.setAttribute("piece-type", FENChar);
 
   piece.addEventListener("click", (event: Event) => {
-    if (selectedPiece !== null && selectedPiece !== undefined) {
-      selectedPiece.setAttribute("selected", "false");
-    }
-
-    selectedPiece = event.target as HTMLDivElement;
-    selectedPiece.setAttribute("selected", "true");
+    pieceClickHandler(event);
   });
   square.appendChild(piece);
+}
+
+function pieceClickHandler(event: Event) {
+  if (selectedPiece !== null && selectedPiece !== undefined) {
+    selectedPiece.setAttribute("selected", "false");
+  }
+  selectedPiece = event.target as HTMLDivElement;
+  selectedPiece.setAttribute("selected", "true");
 }

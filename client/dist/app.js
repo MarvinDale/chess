@@ -13,16 +13,20 @@ function createBoard() {
             square.classList.add("square");
             square.setAttribute("data-color", (i + j) % 2 === 0 ? "white" : "black");
             square.addEventListener("click", () => {
-                if (selectedPiece == null || square.children.length > 0) {
-                    return;
-                }
-                selectedPiece.setAttribute("selected", "false");
-                square.appendChild(selectedPiece);
-                selectedPiece = null;
+                squareClickHandler(square);
             });
             chessBoard.appendChild(square);
         }
     }
+}
+function squareClickHandler(square) {
+    if (selectedPiece == null ||
+        selectedPiece.getAttribute("selected") === "false" ||
+        square.children.length > 0) {
+        return;
+    }
+    selectedPiece.setAttribute("selected", "false");
+    square.appendChild(selectedPiece);
 }
 function addPiecesToBoard() {
     const squares = document.querySelectorAll(".square");
@@ -47,12 +51,15 @@ function placePiece(square, FENChar) {
     piece.classList.add("piece");
     piece.setAttribute("piece-type", FENChar);
     piece.addEventListener("click", (event) => {
-        if (selectedPiece !== null && selectedPiece !== undefined) {
-            selectedPiece.setAttribute("selected", "false");
-        }
-        selectedPiece = event.target;
-        selectedPiece.setAttribute("selected", "true");
+        pieceClickHandler(event);
     });
     square.appendChild(piece);
+}
+function pieceClickHandler(event) {
+    if (selectedPiece !== null && selectedPiece !== undefined) {
+        selectedPiece.setAttribute("selected", "false");
+    }
+    selectedPiece = event.target;
+    selectedPiece.setAttribute("selected", "true");
 }
 //# sourceMappingURL=app.js.map
