@@ -41,10 +41,10 @@ function createBoard() {
 
 function squareClickHandler(square: HTMLDivElement) {
   // Check if there's a piece selected
-  if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
+  if (isNoPieceSelected()) {
     return;
   }
-  movePiece(selectedPiece, square, false);
+  movePiece(selectedPiece!, square, false);
 }
 
 function addPiecesToBoard() {
@@ -99,22 +99,22 @@ function pieceClickHandler(event: Event) {
 
 function handleClick(clickedPiece: HTMLElement) {
   // if there are no pieces selected, select the clicked piece
-  if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
+  if (isNoPieceSelected()) {
     selectedPiece = clickedPiece;
     selectPiece(selectedPiece);
   }
   // if there is already a piece selected
-  else if (selectedPiece.getAttribute("selected") === "true") {
+  else if (selectedPiece!.getAttribute("selected") === "true") {
     // if you clicked the selected piece again, deselect it
     if (selectedPiece === clickedPiece) {
       deselectPiece(selectedPiece);
       // otherwise replace the clicked piece with the selected piece and deselect
-    } else if (isSameColor(selectedPiece, clickedPiece)) {
-      deselectPiece(selectedPiece);
+    } else if (isSameColor(selectedPiece!, clickedPiece)) {
+      deselectPiece(selectedPiece!);
       selectedPiece = clickedPiece;
       selectPiece(selectedPiece);
     } else {
-      movePiece(selectedPiece, clickedPiece.parentElement!, true, clickedPiece);
+      movePiece(selectedPiece!, clickedPiece.parentElement!, true, clickedPiece);
     }
   }
 }
@@ -173,4 +173,8 @@ function isSameColor(piece1: HTMLElement, piece2: HTMLElement): boolean {
 
 function isWhite(piece: HTMLElement): boolean {
   return piece.getAttribute("piece-type")!.toUpperCase() === piece.getAttribute("piece-type");
+}
+
+function isNoPieceSelected(): Boolean {
+  return selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false";
 }

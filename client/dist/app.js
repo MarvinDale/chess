@@ -35,7 +35,7 @@ function createBoard() {
     }
 }
 function squareClickHandler(square) {
-    if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
+    if (isNoPieceSelected()) {
         return;
     }
     movePiece(selectedPiece, square, false);
@@ -84,7 +84,7 @@ function pieceClickHandler(event) {
     }
 }
 function handleClick(clickedPiece) {
-    if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
+    if (isNoPieceSelected()) {
         selectedPiece = clickedPiece;
         selectPiece(selectedPiece);
     }
@@ -145,5 +145,8 @@ function isSameColor(piece1, piece2) {
 }
 function isWhite(piece) {
     return piece.getAttribute("piece-type").toUpperCase() === piece.getAttribute("piece-type");
+}
+function isNoPieceSelected() {
+    return selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false";
 }
 //# sourceMappingURL=app.js.map
