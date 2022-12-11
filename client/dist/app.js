@@ -113,7 +113,7 @@ function movePiece(piece, squareToMoveTo, isCapture) {
 }
 function generatePGN(pieceType, squareMovedTo, squareMovedFrom, isCapture) {
     if (colorsTurn === "white") {
-        PGN = PGN + turnNumber + ".";
+        PGN += turnNumber + ".";
         colorsTurn = "black";
     }
     else {
@@ -121,15 +121,15 @@ function generatePGN(pieceType, squareMovedTo, squareMovedFrom, isCapture) {
         colorsTurn = "white";
     }
     if (pieceType !== "p" && pieceType !== "P") {
-        PGN = PGN + pieceType;
+        PGN += pieceType;
     }
     else if (isCapture) {
-        PGN = PGN + squareMovedFrom.charAt(0);
+        PGN += squareMovedFrom.charAt(0);
     }
     if (isCapture) {
-        PGN = PGN + "x";
+        PGN += "x";
     }
-    PGN = PGN + squareMovedTo + " ";
+    PGN += squareMovedTo + " ";
     PGNDisplay.textContent = PGN;
 }
 function deselectPiece(piece) {

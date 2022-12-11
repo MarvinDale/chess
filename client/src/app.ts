@@ -132,7 +132,7 @@ function movePiece(piece: HTMLElement, squareToMoveTo: HTMLElement, isCapture: b
 
 function generatePGN(pieceType: string, squareMovedTo: string, squareMovedFrom: string, isCapture: boolean) {
   if (colorsTurn === "white") {
-    PGN = PGN + turnNumber + ".";
+    PGN += turnNumber + ".";
     colorsTurn = "black";
   } else {
     turnNumber++;
@@ -140,16 +140,16 @@ function generatePGN(pieceType: string, squareMovedTo: string, squareMovedFrom: 
   }
 
   if (pieceType !== "p" && pieceType !== "P") {
-    PGN = PGN + pieceType;
+    PGN += pieceType;
   } else if (isCapture) {
-    PGN = PGN + squareMovedFrom.charAt(0);
+    PGN += squareMovedFrom.charAt(0);
   }
 
   if (isCapture) {
-    PGN = PGN + "x";
+    PGN += "x";
   }
 
-  PGN = PGN + squareMovedTo + " ";
+  PGN += squareMovedTo + " ";
   PGNDisplay.textContent = PGN;
 }
 
