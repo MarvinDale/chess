@@ -84,9 +84,7 @@ function pieceClickHandler(event: Event) {
     if (selectedPiece === clickedPiece) {
       deselectPiece(selectedPiece);
       // otherwise replace the clicked piece with the selected piece and deselect
-    } else if (
-      isSameColor(selectedPiece.getAttribute("piece-type")!) === isSameColor(clickedPiece.getAttribute("piece-type")!)
-    ) {
+    } else if (isSameColor(selectedPiece, clickedPiece)) {
       deselectPiece(selectedPiece);
       selectedPiece = clickedPiece;
       selectPiece(selectedPiece);
@@ -109,10 +107,25 @@ function selectPiece(piece: HTMLElement) {
 
 // used to check if FEN chars are the same case
 // same case means the pieces are the same color
-function isSameColor(str: string): boolean {
-  if (str.toUpperCase() === str) {
-    return true;
+function isSameColor(piece1: HTMLElement, piece2: HTMLElement): boolean {
+  let isPiece1UpperCase;
+  let isPiece2UpperCase;
+  piece1.getAttribute("piece-type");
+  piece2.getAttribute("piece-type");
+  if (piece1.getAttribute("piece-type")!.toUpperCase() === piece1.getAttribute("piece-type")) {
+    isPiece1UpperCase = true;
   } else {
-    return false;
+    isPiece1UpperCase = false;
   }
+
+  if (piece2.getAttribute("piece-type")!.toUpperCase() === piece2.getAttribute("piece-type")) {
+    isPiece2UpperCase = true;
+  } else {
+    isPiece2UpperCase = false;
+  }
+
+  if (isPiece1UpperCase === isPiece2UpperCase) {
+    return true;
+  }
+  return false;
 }

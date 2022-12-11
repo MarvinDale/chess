@@ -66,7 +66,7 @@ function pieceClickHandler(event) {
         if (selectedPiece === clickedPiece) {
             deselectPiece(selectedPiece);
         }
-        else if (isSameColor(selectedPiece.getAttribute("piece-type")) === isSameColor(clickedPiece.getAttribute("piece-type"))) {
+        else if (isSameColor(selectedPiece, clickedPiece)) {
             deselectPiece(selectedPiece);
             selectedPiece = clickedPiece;
             selectPiece(selectedPiece);
@@ -85,12 +85,26 @@ function deselectPiece(piece) {
 function selectPiece(piece) {
     piece.setAttribute("selected", "true");
 }
-function isSameColor(str) {
-    if (str.toUpperCase() === str) {
-        return true;
+function isSameColor(piece1, piece2) {
+    let isPiece1UpperCase;
+    let isPiece2UpperCase;
+    piece1.getAttribute("piece-type");
+    piece2.getAttribute("piece-type");
+    if (piece1.getAttribute("piece-type").toUpperCase() === piece1.getAttribute("piece-type")) {
+        isPiece1UpperCase = true;
     }
     else {
-        return false;
+        isPiece1UpperCase = false;
     }
+    if (piece2.getAttribute("piece-type").toUpperCase() === piece2.getAttribute("piece-type")) {
+        isPiece2UpperCase = true;
+    }
+    else {
+        isPiece2UpperCase = false;
+    }
+    if (isPiece1UpperCase === isPiece2UpperCase) {
+        return true;
+    }
+    return false;
 }
 //# sourceMappingURL=app.js.map
