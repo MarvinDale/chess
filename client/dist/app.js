@@ -1,4 +1,6 @@
 "use strict";
+const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+let FENStringPosition = 0;
 const boardElement = document.getElementById("board");
 const chessBoard = document.getElementById("chess-board");
 let selectedPiece;
@@ -25,17 +27,27 @@ function addPiecesToBoard() {
     const squares = document.querySelectorAll(".square");
     for (var i = 0; i < squares.length; i++) {
         let square = squares[i];
-        var row = (i / 8) | 0;
-        if (row === 1 || row === 6) {
-            var piece = document.createElement("div");
-            piece.classList.add("piece");
-            piece.addEventListener("click", (event) => {
-                selectedPiece = event.target;
-            });
-            square.appendChild(piece);
-        }
-        else if (row === 0 || row === 7) {
-        }
+        i = parseFEN(i, square);
     }
+}
+function parseFEN(i, square) {
+    let FEN = startingPositionFEN.replace(/\//g, "");
+    if (!isNaN(+FEN.charAt(FENStringPosition))) {
+        i = i + +FEN.charAt(FENStringPosition) - 1;
+    }
+    else {
+        placePiece(square, FEN.charAt(FENStringPosition));
+    }
+    FENStringPosition++;
+    return i;
+}
+function placePiece(square, FENChar) {
+    var piece = document.createElement("div");
+    piece.classList.add("piece");
+    piece.setAttribute("piece-type", FENChar);
+    piece.addEventListener("click", (event) => {
+        selectedPiece = event.target;
+    });
+    square.appendChild(piece);
 }
 //# sourceMappingURL=app.js.map

@@ -1,3 +1,5 @@
+const startingPositionFEN = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR";
+let FENStringPosition = 0;
 const boardElement: HTMLElement = document.getElementById("board")!;
 
 const chessBoard = document.getElementById("chess-board")!;
@@ -31,20 +33,30 @@ function addPiecesToBoard() {
   const squares = document.querySelectorAll(".square");
   for (var i = 0; i < squares.length; i++) {
     let square = squares[i] as HTMLDivElement;
-    var row = (i / 8) | 0;
-    // var col = i % 8;
-
-    if (row === 1 || row === 6) {
-      var piece = document.createElement("div");
-      piece.classList.add("piece");
-
-      piece.addEventListener("click", (event: Event) => {
-        selectedPiece = event.target as HTMLDivElement;
-      });
-
-      square.appendChild(piece);
-    } else if (row === 0 || row === 7) {
-      // Add other pieces here (rooks, knights, etc.)
-    }
+    i = parseFEN(i, square);
   }
+}
+
+function parseFEN(i: number, square: HTMLDivElement) {
+  let FEN = startingPositionFEN.replace(/\//g, "");
+
+  if (!isNaN(+FEN.charAt(FENStringPosition))) {
+    i = i + +FEN.charAt(FENStringPosition) - 1;
+  } else {
+    placePiece(square, FEN.charAt(FENStringPosition));
+  }
+
+  FENStringPosition++;
+  return i;
+}
+
+function placePiece(square: HTMLDivElement, FENChar: string) {
+  var piece = document.createElement("div");
+  piece.classList.add("piece");
+  piece.setAttribute("piece-type", FENChar);
+
+  piece.addEventListener("click", (event: Event) => {
+    selectedPiece = event.target as HTMLDivElement;
+  });
+  square.appendChild(piece);
 }
