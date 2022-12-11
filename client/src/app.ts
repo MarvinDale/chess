@@ -89,6 +89,24 @@ function pieceClickHandler(event: Event) {
   event.stopPropagation();
   let clickedPiece = event.target as HTMLDivElement;
   console.log("piece clicked: " + clickedPiece);
+  if (selectedPiece?.getAttribute("selected") === "true") {
+    handleClick(clickedPiece);
+  } else {
+    if (
+      clickedPiece.getAttribute("piece-type")!.toUpperCase() === clickedPiece.getAttribute("piece-type") &&
+      colorsTurn === "white"
+    ) {
+      handleClick(clickedPiece);
+    } else if (
+      clickedPiece.getAttribute("piece-type")!.toUpperCase() !== clickedPiece.getAttribute("piece-type") &&
+      colorsTurn == "black"
+    ) {
+      handleClick(clickedPiece);
+    }
+  }
+}
+
+function handleClick(clickedPiece: HTMLElement) {
   // if there are no pieces selected, select the clicked piece
   if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
     selectedPiece = clickedPiece;

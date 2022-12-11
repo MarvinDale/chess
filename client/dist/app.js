@@ -72,6 +72,21 @@ function pieceClickHandler(event) {
     event.stopPropagation();
     let clickedPiece = event.target;
     console.log("piece clicked: " + clickedPiece);
+    if ((selectedPiece === null || selectedPiece === void 0 ? void 0 : selectedPiece.getAttribute("selected")) === "true") {
+        handleClick(clickedPiece);
+    }
+    else {
+        if (clickedPiece.getAttribute("piece-type").toUpperCase() === clickedPiece.getAttribute("piece-type") &&
+            colorsTurn === "white") {
+            handleClick(clickedPiece);
+        }
+        else if (clickedPiece.getAttribute("piece-type").toUpperCase() !== clickedPiece.getAttribute("piece-type") &&
+            colorsTurn == "black") {
+            handleClick(clickedPiece);
+        }
+    }
+}
+function handleClick(clickedPiece) {
     if (selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false") {
         selectedPiece = clickedPiece;
         selectPiece(selectedPiece);
