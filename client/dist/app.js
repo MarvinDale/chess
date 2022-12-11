@@ -73,11 +73,9 @@ function pieceClickHandler(event) {
     if ((selectedPiece === null || selectedPiece === void 0 ? void 0 : selectedPiece.getAttribute("selected")) === "true") {
         handleClick(clickedPiece);
     }
-    else {
-        if ((isWhitePiece(clickedPiece) && colorsTurn === "white") ||
-            (!isWhitePiece(clickedPiece) && colorsTurn == "black")) {
-            handleClick(clickedPiece);
-        }
+    else if ((isWhitePiece(clickedPiece) && colorsTurn === "white") ||
+        (!isWhitePiece(clickedPiece) && colorsTurn === "black")) {
+        handleClick(clickedPiece);
     }
 }
 function handleClick(clickedPiece) {
