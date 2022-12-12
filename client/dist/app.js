@@ -78,7 +78,7 @@ function pieceClickHandler(event) {
             if (selectedPiece === clickedPiece) {
                 deselectPiece(selectedPiece);
             }
-            else if (isSameColor(selectedPiece, clickedPiece)) {
+            else if (piecesAreSameColor(selectedPiece, clickedPiece)) {
                 deselectPiece(selectedPiece);
                 selectPiece(clickedPiece);
             }
@@ -123,7 +123,7 @@ function selectPiece(piece) {
     selectedPiece = piece;
     selectedPiece.setAttribute("selected", "true");
 }
-function isSameColor(piece1, piece2) {
+function piecesAreSameColor(piece1, piece2) {
     let isPiece1White;
     let isPiece2White;
     isWhitePiece(piece1) ? (isPiece1White = true) : (isPiece1White = false);

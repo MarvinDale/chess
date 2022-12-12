@@ -92,7 +92,7 @@ function pieceClickHandler(event: Event) {
       if (selectedPiece === clickedPiece) {
         deselectPiece(selectedPiece);
         // otherwise replace the clicked piece with the selected piece and deselect
-      } else if (isSameColor(selectedPiece!, clickedPiece)) {
+      } else if (piecesAreSameColor(selectedPiece!, clickedPiece)) {
         deselectPiece(selectedPiece!);
         selectPiece(clickedPiece);
       } else {
@@ -145,7 +145,7 @@ function selectPiece(piece: HTMLElement) {
 
 // used to check if FEN chars are the same case
 // same case means the pieces are the same color
-function isSameColor(piece1: HTMLElement, piece2: HTMLElement): boolean {
+function piecesAreSameColor(piece1: HTMLElement, piece2: HTMLElement): boolean {
   let isPiece1White;
   let isPiece2White;
 
