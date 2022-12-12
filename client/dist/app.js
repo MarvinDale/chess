@@ -70,26 +70,21 @@ function setupPiecesOnBoard(square, FENChar) {
 function pieceClickHandler(event) {
     event.stopPropagation();
     let clickedPiece = event.target;
-    if ((selectedPiece === null || selectedPiece === void 0 ? void 0 : selectedPiece.getAttribute("selected")) === "true" ||
-        (isWhitePiece(clickedPiece) && colorsTurn === "white") ||
-        (!isWhitePiece(clickedPiece) && colorsTurn === "black")) {
-        handleClick(clickedPiece);
-    }
-}
-function handleClick(clickedPiece) {
-    if (isNoPieceSelected()) {
-        selectPiece(clickedPiece);
-    }
-    else {
-        if (selectedPiece === clickedPiece) {
-            deselectPiece(selectedPiece);
-        }
-        else if (isSameColor(selectedPiece, clickedPiece)) {
-            deselectPiece(selectedPiece);
+    if (isAnyPieceSelected() || isThisPiecesColorsTurn(clickedPiece)) {
+        if (isNoPieceSelected()) {
             selectPiece(clickedPiece);
         }
         else {
-            movePiece(selectedPiece, clickedPiece.parentElement, true, clickedPiece);
+            if (selectedPiece === clickedPiece) {
+                deselectPiece(selectedPiece);
+            }
+            else if (isSameColor(selectedPiece, clickedPiece)) {
+                deselectPiece(selectedPiece);
+                selectPiece(clickedPiece);
+            }
+            else {
+                movePiece(selectedPiece, clickedPiece.parentElement, true, clickedPiece);
+            }
         }
     }
 }
@@ -140,5 +135,11 @@ function isWhitePiece(piece) {
 }
 function isNoPieceSelected() {
     return selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false";
+}
+function isAnyPieceSelected() {
+    return (selectedPiece === null || selectedPiece === void 0 ? void 0 : selectedPiece.getAttribute("selected")) === "true";
+}
+function isThisPiecesColorsTurn(piece) {
+    return (isWhitePiece(piece) && colorsTurn === "white") || (!isWhitePiece(piece) && colorsTurn === "black");
 }
 //# sourceMappingURL=app.js.map

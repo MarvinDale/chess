@@ -84,29 +84,20 @@ function pieceClickHandler(event: Event) {
   event.stopPropagation(); // when you click a piece this stops the square being clicked too
   let clickedPiece = event.target as HTMLDivElement;
 
-  if (
-    selectedPiece?.getAttribute("selected") === "true" ||
-    (isWhitePiece(clickedPiece) && colorsTurn === "white") ||
-    (!isWhitePiece(clickedPiece) && colorsTurn === "black")
-  ) {
-    handleClick(clickedPiece);
-  }
-}
-
-function handleClick(clickedPiece: HTMLElement) {
-  // if there are no pieces selected, select the clicked piece
-  if (isNoPieceSelected()) {
-    selectPiece(clickedPiece);
-  } else {
-    // if you clicked the selected piece again, deselect it
-    if (selectedPiece === clickedPiece) {
-      deselectPiece(selectedPiece);
-      // otherwise replace the clicked piece with the selected piece and deselect
-    } else if (isSameColor(selectedPiece!, clickedPiece)) {
-      deselectPiece(selectedPiece!);
+  if (isAnyPieceSelected() || isThisPiecesColorsTurn(clickedPiece)) {
+    if (isNoPieceSelected()) {
       selectPiece(clickedPiece);
     } else {
-      movePiece(selectedPiece!, clickedPiece.parentElement!, true, clickedPiece);
+      // if you clicked the selected piece again, deselect it
+      if (selectedPiece === clickedPiece) {
+        deselectPiece(selectedPiece);
+        // otherwise replace the clicked piece with the selected piece and deselect
+      } else if (isSameColor(selectedPiece!, clickedPiece)) {
+        deselectPiece(selectedPiece!);
+        selectPiece(clickedPiece);
+      } else {
+        movePiece(selectedPiece!, clickedPiece.parentElement!, true, clickedPiece);
+      }
     }
   }
 }
@@ -170,4 +161,12 @@ function isWhitePiece(piece: HTMLElement): boolean {
 
 function isNoPieceSelected(): Boolean {
   return selectedPiece === null || selectedPiece === undefined || selectedPiece.getAttribute("selected") === "false";
+}
+
+function isAnyPieceSelected(): Boolean {
+  return selectedPiece?.getAttribute("selected") === "true";
+}
+
+function isThisPiecesColorsTurn(piece: HTMLElement): Boolean {
+  return (isWhitePiece(piece) && colorsTurn === "white") || (!isWhitePiece(piece) && colorsTurn === "black");
 }
